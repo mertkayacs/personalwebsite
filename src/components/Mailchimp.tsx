@@ -8,8 +8,11 @@ import {
   Input,
   Textarea,
   Column,
+  Background,
+  Text,
 } from '@once-ui-system/core';
 import { useRef, useState } from 'react';
+import { opacity, SpacingToken } from '@once-ui-system/core';
 
 export const Mailchimp = () => {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>(
@@ -66,9 +69,8 @@ export const Mailchimp = () => {
   return (
     <Column
       overflow="hidden"
-      width="m"
-      maxWidth="m"
-      padding="l"
+      style={{ width: '100%' }}
+      padding="xl"
       radius="l"
       marginBottom="m"
       horizontal="center"
@@ -76,23 +78,80 @@ export const Mailchimp = () => {
       background="surface"
       border="neutral-alpha-weak"
     >
+      <Background
+        top="0"
+        position="absolute"
+        mask={{
+          x: mailchimp.effects.mask.x,
+          y: mailchimp.effects.mask.y,
+          radius: mailchimp.effects.mask.radius,
+          cursor: mailchimp.effects.mask.cursor,
+        }}
+        gradient={{
+          display: mailchimp.effects.gradient.display,
+          opacity: mailchimp.effects.gradient.opacity as opacity,
+          x: mailchimp.effects.gradient.x,
+          y: mailchimp.effects.gradient.y,
+          width: mailchimp.effects.gradient.width,
+          height: mailchimp.effects.gradient.height,
+          tilt: mailchimp.effects.gradient.tilt,
+          colorStart: mailchimp.effects.gradient.colorStart,
+          colorEnd: mailchimp.effects.gradient.colorEnd,
+        }}
+        dots={{
+          display: mailchimp.effects.dots.display,
+          opacity: mailchimp.effects.dots.opacity as opacity,
+          size: mailchimp.effects.dots.size as SpacingToken,
+          color: mailchimp.effects.dots.color,
+        }}
+        grid={{
+          display: mailchimp.effects.grid.display,
+          opacity: mailchimp.effects.grid.opacity as opacity,
+          color: mailchimp.effects.grid.color,
+          width: mailchimp.effects.grid.width,
+          height: mailchimp.effects.grid.height,
+        }}
+        lines={{
+          display: mailchimp.effects.lines.display,
+          opacity: mailchimp.effects.lines.opacity as opacity,
+          size: mailchimp.effects.lines.size as SpacingToken,
+          thickness: mailchimp.effects.lines.thickness,
+          angle: mailchimp.effects.lines.angle,
+          color: mailchimp.effects.lines.color,
+        }}
+      />
+
       <Heading
         style={{ position: 'relative' }}
-        marginBottom="m"
+        marginBottom="s"
         variant="display-strong-xs"
       >
-        Let's get in touch
+        Let&apos;s get in touch
       </Heading>
+      <Text
+        style={{
+          position: 'relative',
+          maxWidth: 'var(--responsive-width-xs)',
+        }}
+        wrap="balance"
+        marginBottom="l"
+        onBackground="neutral-medium"
+      >
+        Fill out the form below and I’ll get back to you as soon as possible.
+      </Text>
 
       <form
         ref={formRef}
         onSubmit={handleSubmit}
-        style={{ margin: '0 auto', width: '100%', maxWidth: '500px' }}
-        id="form"
         method="POST"
+        style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
       >
-        <Flex direction="column" gap="8">
-          {/* Hidden fields */}
+        <Flex
+          direction="column"
+          gap="8"
+          style={{ width: '100%', maxWidth: '600px' }}
+          id="mc_embed_signup_scroll"
+        >
           <input
             type="hidden"
             name="access_key"
@@ -100,13 +159,13 @@ export const Mailchimp = () => {
           />
           <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
 
-          {/* Form fields */}
           <Input
             name="name"
             id="name"
             type="text"
             placeholder="Your Name"
             required
+            width="100%"
           />
           <Input
             name="email"
@@ -114,29 +173,23 @@ export const Mailchimp = () => {
             type="email"
             placeholder="Your Email"
             required
+            width="100%"
           />
           <Textarea
             name="message"
             id="message"
             placeholder="Your Message"
-            rows={2}
+            rows={3}
             required
+            style={{ width: '100%' }}
           />
 
-          {/* Submit button */}
-          <Flex style={{ justifyContent: 'center', marginTop: '6%' }}>
+          <Flex height="48" vertical="center">
             <Button
               type="submit"
               size="m"
-              style={{ width: '50%' }}
+              style={{ width: '100%' }}
               disabled={status === 'sending' || status === 'sent'}
-              variant={
-                status === 'sent'
-                  ? 'primary'
-                  : status === 'error'
-                  ? 'danger'
-                  : 'primary'
-              }
             >
               {status === 'idle' && 'Send Message'}
               {status === 'sending' && 'Sending...'}
@@ -145,11 +198,10 @@ export const Mailchimp = () => {
             </Button>
           </Flex>
 
-          {/* Response output */}
           <div
             id="result"
             ref={resultRef}
-            style={{ marginTop: '1rem', color: '#aaa' }}
+            style={{ marginTop: '1rem', color: '#aaa', textAlign: 'center' }}
           />
         </Flex>
       </form>

@@ -65,7 +65,7 @@ const home = {
     display: true,
     title: (
       <>
-        AI Engineer at : <strong className="ml-4"> Enocta </strong>
+        AI & Fullstack Engineer
       </>
     ),
     href: '/work/building-once-ui-a-customizable-design-system',

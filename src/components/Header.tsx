@@ -157,7 +157,7 @@ export const Header = () => {
                   <ToggleButton
                     className="s-flex-show"
                     prefixIcon="book"
-                    href="/blog"
+                    href="https://medium.com/@mertkayacs"
                     selected={pathname.startsWith('/blog')}
                   />
                 </>

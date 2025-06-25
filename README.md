@@ -14,15 +14,15 @@ This is my personal portfolio website built with **Next.js**, **Tailwind CSS**, 
 
 ### 🖥️ Home Page
 
-![Home Screenshot](/images/home.png)
+![Home Screenshot](public/images/home.png)
 
 ### 📄 About Page
 
-![AboutPage Screenshot](/images/about.png)
+![AboutPage Screenshot](public/images/about.png)
 
 ### ✉️ Projects Page
 
-![Project Screenshot](/images/project.png)
+![Project Screenshot](public/images/project.png)
 
 ---
 

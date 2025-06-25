@@ -1,0 +1,30 @@
+---
+title: 'Information Retrieval System for Turkish COVID-19 Content'
+publishedAt: '2021-03-15'
+summary: 'A classic Information Retrieval System built from scratch in Python, focused on crawling, indexing, and querying Turkish COVID-19 web pages using JAR-based NLP and a fully local pipeline.'
+images:
+  - '/images/projects/ir-system/cover.jpg'
+---
+
+## Overview
+
+This project is a fully local information retrieval engine tailored to Turkish-language COVID-19-related content. It simulates a simplified version of a search engine pipeline with core stages including web crawling, indexing, and retrieval. It's built in Python, with integration of a `.jar`-based Turkish NLP library for accurate text handling.
+
+## Key Features
+
+- **Custom Web Crawler**: Fetches thousands of web pages and stores them in structured JSON.
+- **Indexing Engine**: Creates an inverted index from parsed data, optimized for fast keyword lookup.
+- **Query Interface**: Retrieves relevant pages using basic ranking logic.
+- **Turkish NLP Support**: Uses `zemberek-tum-2.0.jar` to properly tokenize and stem Turkish text.
+- **No External Dependencies**: Fully offline—no web frameworks or databases required.
+
+## Technologies Used
+
+- Python (Jupyter + PyCharm)
+- BeautifulSoup4, Requests, JPype1
+- Java-based Zemberek NLP
+- JSON for data storage
+
+## GitHub
+
+[🔗 View the code on GitHub](https://github.com/mertkayacs/InformatiionRetrievalSystem)

@@ -1,0 +1,45 @@
+---
+title: 'Leadership Coach Chatbot (Turkish)'
+publishedAt: '2024-01-04'
+summary: 'A Turkish-language leadership chatbot that provides AI-powered guidance using GPT-4, LangChain, and HuggingFace embeddings with a fallback Google Search API. Designed with a beautiful Streamlit UI and hosted locally for fast response times.'
+images:
+  - '/images/projects/leadership-coach/cover-01.jpg'
+  - '/images/projects/leadership-coach/cover-02.jpg'
+---
+
+## Overview
+
+This project is a Turkish-language AI chatbot designed to serve as a personal leadership coach. It helps users navigate challenges related to communication, decision-making, and team dynamics using contextualized answers drawn from curated Turkish leadership resources.
+
+The system integrates modern AI tools to create a robust and responsive pipeline, combining locally hosted embeddings with GPT-4 reasoning, and falling back to Google Search results when relevant information is not found in the vector store.
+
+## Key Features
+
+- **Streamlit UI**: A dark-themed, responsive interface with live clock, chat history, and dynamic feedback elements.
+- **HuggingFace Embeddings**: Turkish leadership articles and documents are chunked, embedded, and uploaded to Weaviate for fast similarity search.
+- **LangChain Framework**: Orchestrates prompt construction, memory handling, and fallback strategies between local and web sources.
+- **GPT-4 Powered**: Provides high-quality answers tailored to Turkish-language leadership concepts and vocabulary.
+- **Google Search Fallback**: If no relevant match is found in Weaviate, the system fetches real-time search results from Google and reroutes them to GPT-4 for summarization.
+
+## Technologies Used
+
+- **Streamlit**: For fast development of an elegant user interface.
+- **LangChain**: For chaining prompts and handling document retrieval logic.
+- **Weaviate**: As the vector database for semantic search.
+- **HuggingFace Transformers**: For creating high-quality Turkish embeddings.
+- **GPT-4 via OpenAI API**: As the main reasoning engine.
+- **Google Search API**: For contextual fallback queries when needed.
+
+## Challenges and Learnings
+
+Handling Turkish-specific NLP tasks with embeddings was particularly tricky, requiring careful chunking and testing with various transformer models. Streamlining fallback logic also required tuning thresholds to ensure GPT only used Google when necessary.
+
+This project sharpened my ability to combine multiple AI services into one smooth user experience while building for a non-English audience.
+
+## Outcome
+
+The chatbot works offline-first and delivers fast, insightful responses to a variety of leadership questions. It’s a practical AI tool for professionals and students alike who seek Turkish-native support in leadership development.
+
+## GitHub
+
+[🔗 View the code on GitHub](https://github.com/mertkayacs/Leadership-Coach-Chatbot)

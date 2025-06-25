@@ -1,16 +1,33 @@
-import { getPosts } from "@/utils/utils";
-import { Column } from "@once-ui-system/core";
-import { ProjectCard } from "@/components";
+import { getPosts } from '@/utils/utils';
+import { ProjectCard } from '../ProjectCard';
 
 interface ProjectsProps {
   range?: [number, number?];
+  variant?: 'home' | 'grid'; // <-- add this
 }
 
-export function Projects({ range }: ProjectsProps) {
-  let allProjects = getPosts(["src", "app", "work", "projects"]);
+type Project = {
+  slug: string;
+  metadata: {
+    title: string;
+    summary: string;
+    publishedAt: string;
+    link?: string;
+    images?: string[];
+    tags?: string[];
+    [key: string]: any;
+  };
+  [key: string]: any;
+};
+
+export function Projects({ range, variant = 'grid' }: ProjectsProps) {
+  let allProjects: Project[] = getPosts(['src', 'app', 'work', 'projects']);
 
   const sortedProjects = allProjects.sort((a, b) => {
-    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
+    return (
+      new Date(b.metadata.publishedAt).getTime() -
+      new Date(a.metadata.publishedAt).getTime()
+    );
   });
 
   const displayedProjects = range
@@ -18,20 +35,38 @@ export function Projects({ range }: ProjectsProps) {
     : sortedProjects;
 
   return (
-    <Column fillWidth gap="xl" marginBottom="40" paddingX="l">
-      {displayedProjects.map((post, index) => (
-        <ProjectCard
-          priority={index < 2}
+    <div
+      style={{
+        display: variant === 'home' ? 'block' : 'grid',
+        gridTemplateColumns:
+          variant === 'home'
+            ? undefined
+            : 'repeat(auto-fit, minmax(280px, 1fr))',
+        gap: '1rem',
+        padding: '0 1rem',
+        marginBottom: '32px',
+      }}
+    >
+      {displayedProjects.map((post: Project) => (
+        <div
           key={post.slug}
-          href={`work/${post.slug}`}
-          images={post.metadata.images}
-          title={post.metadata.title}
-          description={post.metadata.summary}
-          content={post.content}
-          avatars={post.metadata.team?.map((member) => ({ src: member.avatar })) || []}
-          link={post.metadata.link || ""}
-        />
+          style={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <ProjectCard
+            href={`work/${post.slug}`}
+            title={post.metadata.title}
+            description={post.metadata.summary}
+            link={post.metadata.link || ''}
+            image={post.metadata.images?.[0] || ''}
+            tags={post.metadata.tags || []}
+            variant={variant} // 👈 Pass it to ProjectCard
+          />
+        </div>
       ))}
-    </Column>
+    </div>
   );
 }

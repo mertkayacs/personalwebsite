@@ -1,94 +1,89 @@
-# **Magic Portfolio by Once UI**
+# 🧑‍💻 Mert Kaya – Personal Website
 
-View the [demo here](https://demo.magic-portfolio.com).
+This is my personal portfolio website built with **Next.js**, **Tailwind CSS**, and **Once UI**. It showcases my CV, projects, and contact information in a clean, responsive, and multilingual-ready design.
 
-![Magic Portfolio](https://demo.magic-portfolio.com/images/og/home.jpg)
+---
 
+## 🌐 Live Website
 
-# **Getting started**
+🔗 [https://mertkayacs.com](https://mertkayacs.com)
 
-Magic Portfolio was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.
+---
 
-**1. Clone the repository**
-```
-git clone https://github.com/once-ui-system/magic-portfolio.git
-```
+## 📸 Screenshots
 
-**2. Install dependencies**
-```
-npm install
-```
+### 🖥️ Home Page
 
-**3. Run dev server**
-```
-npm run dev
-```
+![Home Screenshot](/images/home.png)
 
-**4. Edit config**
-```
-src/app/resources/config
-```
+### 📄 About Page
 
-**5. Edit content**
-```
-src/app/resources/content
-```
+![AboutPage Screenshot](/images/about.png)
 
-**6. Create blog posts / projects**
-```
-Add a new .mdx file to src/app/blog/posts or src/app/work/projects
-```
+### ✉️ Projects Page
 
-# **Documentation**
+![Project Screenshot](/images/project.png)
 
-Docs available at: [docs.once-ui.com](https://docs.once-ui.com/docs/magic-portfolio/quick-start)
+---
 
-# **Features**
+## 🚀 Features
 
-## **Once UI**
-- All tokens, components & features of [Once UI](https://once-ui.com)
+- ✅ Downloadable CV
+- ✅ Responsive design with dark mode
+- ✅ Side navigation menu
+- ✅ Contact form using Web3Forms with dynamic feedback
+- ✅ Social media links (e.g., LinkedIn)
+- ✅ Custom domain support (`mertkayacs.com`)
+- ✅ Built with Next.js + Tailwind CSS + Once UI
+- 🚧 Localization support (English, Turkish, German – in progress)
 
-## **SEO**
-- Automatic open-graph and X image generation with next/og
-- Automatic schema and metadata generation based on the content file
+---
 
-## **Design**
-- Responsive layout optimized for all screen sizes
-- Timeless design without heavy animations and motion
-- Endless customization options through [data attributes](https://once-ui.com/docs/theming)
+## 🛠️ Getting Started
 
-## **Content**
-- Render sections conditionally based on the content file
-- Enable or disable pages for blog, work, gallery and about / CV
-- Generate and display social links automatically
-- Set up password protection for URLs
+1. Clone the repo:
 
-## **Localization**
-- A localized version of Magic Portfolio is available with the next-intl library
-- To use localization, switch to the 'i18n' branch
+   ```bash
+   git clone https://github.com/mertkayacs/personalwebsite.git
+   cd personalwebsite
+   ```
 
-# **Authors**
+2. Install dependencies:
 
-Connect with us on Threads or LinkedIn.
+   ```bash
+   npm install
+   ```
 
-Lorant Toth: [Threads](https://www.threads.net/@lorant.one), [LinkedIn](https://www.linkedin.com/in/tothlorant/)  
-Zsofia Komaromi: [Threads](https://www.threads.net/@zsofia_kom), [LinkedIn](https://www.linkedin.com/in/zsofiakomaromi/)
+3. Run the development server:
 
-Localization added by [François Hernandez](https://github.com/francoishernandez)
+   ```bash
+   npm run dev
+   ```
 
-# **Get involved**
+4. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-- Join the [Design Engineers Club on Discord](https://discord.com/invite/5EyAQ4eNdS) and share your portfolio with us!
-- Report a [bug](https://github.com/once-ui-system/magic-portfolio/issues/new?labels=bug&template=bug_report.md).
+---
 
-# **License**
+## 📦 Deployment
 
-Distributed under the CC BY-NC 4.0 License.
-- Commercial usage is not allowed.
-- Attribution is required.
-- You can extend the license to commercial use by purchasing a [Once UI Pro](https://once-ui.com/pricing) license.
+The site is deployed on [Vercel](https://vercel.com), optimized for Next.js.
+To deploy your own fork:
 
-See `LICENSE.txt` for more information.
+1. Push to your GitHub repository.
+2. Go to [vercel.com](https://vercel.com) and import the project.
+3. Connect your custom domain if desired.
 
-# **Deploy with Vercel**
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-portfolio&project-name=portfolio&repository-name=portfolio&redirect-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-portfolio&demo-title=Magic%20Portfolio&demo-description=Showcase%20your%20designers%20or%20developer%20portfolio&demo-url=https%3A%2F%2Fdemo.magic-portfolio.com&demo-image=%2F%2Fraw.githubusercontent.com%2Fonce-ui-system%2Fmagic-portfolio%2Fmain%2Fpublic%2Fimages%2Fog%2Fhome.jpg)
+---
+
+## 📬 Contact
+
+Want to collaborate or get in touch?
+
+- Visit [https://mertkayacs.com](https://mertkayacs.com)
+- Use the contact form on the site
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.

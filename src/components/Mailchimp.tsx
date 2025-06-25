@@ -1,63 +1,74 @@
-"use client";
+'use client';
 
-import { mailchimp } from "@/resources";
-import { Button, Flex, Heading, Input, Text, Background, Column } from "@once-ui-system/core";
-import { opacity, SpacingToken } from "@once-ui-system/core";
-import { useState } from "react";
+import { mailchimp } from '@/resources';
+import {
+  Button,
+  Flex,
+  Heading,
+  Input,
+  Textarea,
+  Column,
+} from '@once-ui-system/core';
+import { useRef, useState } from 'react';
 
-function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T {
-  let timeout: ReturnType<typeof setTimeout>;
-  return ((...args: Parameters<T>) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), delay);
-  }) as T;
-}
+export const Mailchimp = () => {
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>(
+    'idle',
+  );
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const resultRef = useRef<HTMLDivElement | null>(null);
 
-type NewsletterProps = {
-  display: boolean;
-  title: string | JSX.Element;
-  description: string | JSX.Element;
-};
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = formRef.current;
+    const result = resultRef.current;
+    if (!form || !result) return;
 
-export const Mailchimp = ({ newsletter }: { newsletter: NewsletterProps }) => {
-  const [email, setEmail] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [touched, setTouched] = useState<boolean>(false);
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    const json = JSON.stringify(data);
 
-  const validateEmail = (email: string): boolean => {
-    if (email === "") {
-      return true;
+    result.innerHTML = 'Please wait...';
+    setStatus('sending');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: json,
+      });
+
+      const resultData = await response.json();
+
+      if (response.status === 200) {
+        result.innerHTML = 'Form submitted successfully';
+        setStatus('sent');
+        form.reset();
+      } else {
+        console.error(resultData);
+        result.innerHTML = resultData.message;
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error(error);
+      if (result) result.innerHTML = 'Something went wrong!';
+      setStatus('error');
     }
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-
-    if (!validateEmail(value)) {
-      setError("Please enter a valid email address.");
-    } else {
-      setError("");
-    }
-  };
-
-  const debouncedHandleChange = debounce(handleChange, 2000);
-
-  const handleBlur = () => {
-    setTouched(true);
-    if (!validateEmail(email)) {
-      setError("Please enter a valid email address.");
-    }
+    setTimeout(() => {
+      if (result) result.style.display = 'none';
+    }, 3000);
   };
 
   return (
     <Column
       overflow="hidden"
-      fillWidth
-      padding="xl"
+      width="m"
+      maxWidth="m"
+      padding="l"
       radius="l"
       marginBottom="m"
       horizontal="center"
@@ -65,121 +76,85 @@ export const Mailchimp = ({ newsletter }: { newsletter: NewsletterProps }) => {
       background="surface"
       border="neutral-alpha-weak"
     >
-      <Background
-        top="0"
-        position="absolute"
-        mask={{
-          x: mailchimp.effects.mask.x,
-          y: mailchimp.effects.mask.y,
-          radius: mailchimp.effects.mask.radius,
-          cursor: mailchimp.effects.mask.cursor
-        }}
-        gradient={{
-          display: mailchimp.effects.gradient.display,
-          opacity: mailchimp.effects.gradient.opacity as opacity,
-          x: mailchimp.effects.gradient.x,
-          y: mailchimp.effects.gradient.y,
-          width: mailchimp.effects.gradient.width,
-          height: mailchimp.effects.gradient.height,
-          tilt: mailchimp.effects.gradient.tilt,
-          colorStart: mailchimp.effects.gradient.colorStart,
-          colorEnd: mailchimp.effects.gradient.colorEnd,
-        }}
-        dots={{
-          display: mailchimp.effects.dots.display,
-          opacity: mailchimp.effects.dots.opacity as opacity,
-          size: mailchimp.effects.dots.size as SpacingToken,
-          color: mailchimp.effects.dots.color,
-        }}
-        grid={{
-          display: mailchimp.effects.grid.display,
-          opacity: mailchimp.effects.grid.opacity as opacity,
-          color: mailchimp.effects.grid.color,
-          width: mailchimp.effects.grid.width,
-          height: mailchimp.effects.grid.height,
-        }}
-        lines={{
-          display: mailchimp.effects.lines.display,
-          opacity: mailchimp.effects.lines.opacity as opacity,
-          size: mailchimp.effects.lines.size as SpacingToken,
-          thickness: mailchimp.effects.lines.thickness,
-          angle: mailchimp.effects.lines.angle,
-          color: mailchimp.effects.lines.color,
-        }}
-      />
-      <Heading style={{ position: "relative" }} marginBottom="s" variant="display-strong-xs">
-        {newsletter.title}
+      <Heading
+        style={{ position: 'relative' }}
+        marginBottom="m"
+        variant="display-strong-xs"
+      >
+        Let's get in touch
       </Heading>
-      <Text
-        style={{
-          position: "relative",
-          maxWidth: "var(--responsive-width-xs)",
-        }}
-        wrap="balance"
-        marginBottom="l"
-        onBackground="neutral-medium"
-      >
-        {newsletter.description}
-      </Text>
+
       <form
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-        }}
-        action={mailchimp.action}
-        method="post"
-        id="mc-embedded-subscribe-form"
-        name="mc-embedded-subscribe-form"
+        ref={formRef}
+        onSubmit={handleSubmit}
+        style={{ width: '60%' }}
+        id="form"
+        method="POST"
       >
-        <Flex id="mc_embed_signup_scroll" fillWidth maxWidth={24} mobileDirection="column" gap="8">
-          <Input
-            formNoValidate
-            id="mce-EMAIL"
-            name="EMAIL"
-            type="email"
-            placeholder="Email"
-            required
-            onChange={(e) => {
-              if (error) {
-                handleChange(e);
-              } else {
-                debouncedHandleChange(e);
-              }
-            }}
-            onBlur={handleBlur}
-            errorMessage={error}
+        <Flex
+          direction="column"
+          gap="8"
+          style={{ maxWidth: '500px', width: '100%' }}
+        >
+          {/* Hidden fields */}
+          <input
+            type="hidden"
+            name="access_key"
+            value="32e376a3-5032-444e-a9e1-9ea1426c8f7f"
           />
-          <div style={{ display: "none" }}>
-            <input
-              type="checkbox"
-              readOnly
-              name="group[3492][1]"
-              id="mce-group[3492]-3492-0"
-              value=""
-              checked
-            />
-          </div>
-          <div id="mce-responses" className="clearfalse">
-            <div className="response" id="mce-error-response" style={{ display: "none" }}></div>
-            <div className="response" id="mce-success-response" style={{ display: "none" }}></div>
-          </div>
-          <div aria-hidden="true" style={{ position: "absolute", left: "-5000px" }}>
-            <input
-              type="text"
-              readOnly
-              name="b_c1a5a210340eb6c7bff33b2ba_0462d244aa"
-              tabIndex={-1}
-              value=""
-            />
-          </div>
-          <div className="clear">
-            <Flex height="48" vertical="center">
-              <Button id="mc-embedded-subscribe" value="Subscribe" size="m" fillWidth>
-                Subscribe
-              </Button>
-            </Flex>
-          </div>
+          <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
+
+          {/* Form fields */}
+          <Input
+            name="name"
+            id="name"
+            type="text"
+            placeholder="Your Name"
+            required
+          />
+          <Input
+            name="email"
+            id="email"
+            type="email"
+            placeholder="Your Email"
+            required
+          />
+          <Textarea
+            name="message"
+            id="message"
+            placeholder="Your Message"
+            rows={2}
+            required
+          />
+
+          {/* Submit button */}
+          <Flex style={{ justifyContent: 'center', marginTop: '6%' }}>
+            <Button
+              type="submit"
+              size="m"
+              style={{ width: '40%' }}
+              disabled={status === 'sending' || status === 'sent'}
+              variant={
+                status === 'sent'
+                  ? 'primary'
+                  : status === 'error'
+                  ? 'danger'
+                  : 'primary'
+              }
+            >
+              {status === 'idle' && 'Send Message'}
+              {status === 'sending' && 'Sending...'}
+              {status === 'sent' && 'Sent ✓'}
+              {status === 'error' && 'Try Again'}
+            </Button>
+          </Flex>
+
+          {/* Response output */}
+          <div
+            id="result"
+            ref={resultRef}
+            style={{ marginTop: '1rem', color: '#aaa' }}
+          />
         </Flex>
       </form>
     </Column>

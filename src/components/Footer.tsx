@@ -1,6 +1,6 @@
-import { Flex, IconButton, SmartLink, Text } from "@once-ui-system/core";
-import { person, social } from "@/resources";
-import styles from "./Footer.module.scss";
+import { Flex, IconButton, SmartLink, Text } from '@once-ui-system/core';
+import { person, social } from '@/resources';
+import styles from './Footer.module.scss';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -27,31 +27,31 @@ export const Footer = () => {
           <Text paddingX="4">{person.name}</Text>
           <Text onBackground="neutral-weak">
             {/* Usage of this template requires attribution. Please don't remove the link to Once UI. */}
-            / Build your portfolio with{" "}
-            <SmartLink
-              href="https://once-ui.com/products/magic-portfolio"
-            >
-              Once UI
-            </SmartLink>
+            <Text variant="body-default-xs" onBackground="neutral-weak">
+              <SmartLink href="https://once-ui.com/products/magic-portfolio">
+                Once UI
+              </SmartLink>
+            </Text>
           </Text>
         </Text>
+
         <Flex gap="16">
-          {social.map(
-            (item) =>
-              item.link && (
-                <IconButton
-                  key={item.name}
-                  href={item.link}
-                  icon={item.icon}
-                  tooltip={item.name}
-                  size="s"
-                  variant="ghost"
-                />
-              ),
-          )}
+          {social
+            .filter((item) => item.link)
+            .map((item) => (
+              <IconButton
+                key={item.name}
+                href={item.link}
+                icon={item.icon}
+                tooltip={item.name}
+                size="s"
+                variant="ghost"
+              />
+            ))}
         </Flex>
       </Flex>
-      <Flex height="80" show="s"></Flex>
+
+      <Flex height="80" show="s" />
     </Flex>
   );
 };

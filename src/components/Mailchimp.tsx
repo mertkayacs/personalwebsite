@@ -87,15 +87,11 @@ export const Mailchimp = () => {
       <form
         ref={formRef}
         onSubmit={handleSubmit}
-        style={{ width: '60%' }}
+        style={{ margin: '0 auto', width: '100%', maxWidth: '500px' }}
         id="form"
         method="POST"
       >
-        <Flex
-          direction="column"
-          gap="8"
-          style={{ maxWidth: '500px', width: '100%' }}
-        >
+        <Flex direction="column" gap="8">
           {/* Hidden fields */}
           <input
             type="hidden"
@@ -132,7 +128,7 @@ export const Mailchimp = () => {
             <Button
               type="submit"
               size="m"
-              style={{ width: '40%' }}
+              style={{ width: '50%' }}
               disabled={status === 'sending' || status === 'sent'}
               variant={
                 status === 'sent'
